@@ -1,22 +1,24 @@
 package com.mendel.challenge.infrastructure.controller;
 
+import com.mendel.challenge.application.usecase.TransactionGetIdsByTypeUseCase;
 import com.mendel.challenge.application.usecase.TransactionSaveUseCase;
 import com.mendel.challenge.domain.model.Transaction;
 import com.mendel.challenge.domain.model.TransactionRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController("/transactions")
 @RequiredArgsConstructor
+@Slf4j
 public class TransactionController {
 
     private final TransactionSaveUseCase transactionUseCase;
+    private final TransactionGetIdsByTypeUseCase transactionGetIdsByTypeUseCase;
 
     @PutMapping("/{transaction_id}")
     public ResponseEntity<Map<String, String>> save(
@@ -32,6 +34,17 @@ public class TransactionController {
 
         transactionUseCase.saveTransaction(transaction);
 
+        log.info("Saved transaction with id {}", id);
+
         return ResponseEntity.ok(Map.of("status", "ok"));
+    }
+
+    @GetMapping("/types/{type}")
+    public ResponseEntity<List<Long>> save(
+            @PathVariable String type) {
+
+        List<Long> idsByType = transactionGetIdsByTypeUseCase.getIdsByType(type);
+
+        return ResponseEntity.ok(idsByType);
     }
 }

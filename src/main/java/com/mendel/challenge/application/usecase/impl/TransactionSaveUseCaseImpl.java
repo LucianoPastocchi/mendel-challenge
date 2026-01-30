@@ -13,7 +13,7 @@ public class TransactionSaveUseCaseImpl implements TransactionSaveUseCase {
     private final TransactionPort transactionPort;
 
     @Override
-    public Long saveTransaction(Transaction transaction) {
-        return transactionPort.saveTransaction(transaction);
+    public void saveTransaction(Transaction transaction) {
+        transactionPort.saveTransaction(transaction);
     }
 }

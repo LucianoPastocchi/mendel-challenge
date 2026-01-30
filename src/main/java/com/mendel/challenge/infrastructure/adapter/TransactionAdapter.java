@@ -30,6 +30,6 @@ public class TransactionAdapter implements TransactionPort {
 
     @Override
     public List<Long> getIdsByType(String type) {
-        return List.of();
+        return transactionRepository.findByType(type);
     }
 }
