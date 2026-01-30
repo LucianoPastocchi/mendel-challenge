@@ -39,4 +39,13 @@ public class TransactionEntity implements Serializable {
         return entity;
     }
 
+    public static Transaction toDomain(TransactionEntity entity) {
+        return new Transaction(
+                entity.id,
+                entity.amount,
+                entity.type,
+                entity.parentId
+        );
+    }
+
 }

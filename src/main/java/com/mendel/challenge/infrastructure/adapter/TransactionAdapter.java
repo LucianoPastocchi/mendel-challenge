@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -17,19 +18,25 @@ public class TransactionAdapter implements TransactionPort {
     private final TransactionRepository transactionRepository;
 
     @Override
-    public Long saveTransaction(Transaction transaction) {
-        TransactionEntity transactionEntity = TransactionEntity.fromDomain(transaction);
+    public void saveTransaction(Transaction transaction) {
         transactionRepository.save(TransactionEntity.fromDomain(transaction));
-        return transactionEntity.getId();
     }
 
     @Override
-    public Map<String, Double> getTransactionSum(Transaction transaction) {
-        return Map.of();
+    public List<Transaction> getTransactionsByParentId(Long parentId) {
+        return transactionRepository.findByParentId(parentId).stream()
+                .map(TransactionEntity::toDomain)
+                .toList();
     }
 
     @Override
     public List<Long> getIdsByType(String type) {
         return transactionRepository.findByType(type);
+    }
+
+    @Override
+    public Optional<Transaction> getTransactionById(Long id) {
+        return transactionRepository.findById(id)
+                .map(TransactionEntity::toDomain);
     }
 }

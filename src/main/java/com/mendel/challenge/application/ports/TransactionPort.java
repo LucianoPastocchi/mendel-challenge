@@ -5,12 +5,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 public interface TransactionPort {
 
-    Long saveTransaction(Transaction transaction);
-    Map<String, Double> getTransactionSum(Transaction transaction);
+    void saveTransaction(Transaction transaction);
+    List<Transaction> getTransactionsByParentId(Long parentId);
     List<Long> getIdsByType(String type);
-
+   Optional<Transaction> getTransactionById(Long id);
 }
