@@ -2,7 +2,9 @@ package com.mendel.challenge.infrastructure.entity;
 
 import com.mendel.challenge.domain.model.Transaction;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serial;
@@ -12,6 +14,8 @@ import java.io.Serializable;
 @Table(name = "TRANSACTION")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TransactionEntity implements Serializable {
 
     @Serial
