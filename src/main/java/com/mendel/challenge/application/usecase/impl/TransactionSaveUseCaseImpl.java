@@ -14,6 +14,13 @@ public class TransactionSaveUseCaseImpl implements TransactionSaveUseCase {
 
     @Override
     public void saveTransaction(Transaction transaction) {
+        if (transaction.id() != null && transaction.id().equals(transaction.parentId())) {
+            throw new IllegalArgumentException("Parent ID cannot be the same as transaction ID");
+        }
+        if (transaction.parentId() != null && transactionPort.getTransactionById(transaction.parentId()).isEmpty()) {
+            throw new IllegalArgumentException("Parent transaction does not exist");
+        }
         transactionPort.saveTransaction(transaction);
     }
+
 }

@@ -69,12 +69,15 @@ class TransactionAdapterTest {
 
     @Test
     void shouldGetIdsByType() {
-        List<Long> expectedIds = Arrays.asList(1L, 2L, 3L);
-        when(transactionRepository.findByType("shopping")).thenReturn(expectedIds);
+        TransactionEntity entity1 = new TransactionEntity(1L, 500.0, "shopping", null);
+        TransactionEntity entity2 = new TransactionEntity(2L, 300.0, "shopping", null);
+        TransactionEntity entity3 = new TransactionEntity(3L, 200.0, "shopping", null);
+
+        when(transactionRepository.findByType("shopping")).thenReturn(Arrays.asList(entity1, entity2, entity3));
 
         List<Long> result = transactionAdapter.getIdsByType("shopping");
 
-        assertEquals(expectedIds, result);
+        assertEquals(Arrays.asList(1L, 2L, 3L), result);
         verify(transactionRepository, times(1)).findByType("shopping");
     }
 

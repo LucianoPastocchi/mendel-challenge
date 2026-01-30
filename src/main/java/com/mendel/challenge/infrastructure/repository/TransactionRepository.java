@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<TransactionEntity, Long> {
 
-    List<Long> findByType(String type);
+    List<TransactionEntity> findByType(String type);
 
     List<TransactionEntity> findByParentId(Long parentId);
 }

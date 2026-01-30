@@ -30,7 +30,9 @@ public class TransactionAdapter implements TransactionPort {
 
     @Override
     public List<Long> getIdsByType(String type) {
-        return transactionRepository.findByType(type);
+        return transactionRepository.findByType(type).stream()
+                .map(TransactionEntity::getId)
+                .toList();
     }
 
     @Override

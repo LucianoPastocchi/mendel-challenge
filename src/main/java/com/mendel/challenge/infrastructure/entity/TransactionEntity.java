@@ -22,7 +22,6 @@ public class TransactionEntity implements Serializable {
     private static final long serialVersionUID = 6005053388287590724L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
