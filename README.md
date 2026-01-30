@@ -115,6 +115,30 @@ La aplicación estará disponible en: `http://localhost:8080`
 java -jar build/libs/challenge-1.0.0.jar
 ```
 
+## 🐳 Docker
+
+### Construir y ejecutar con Docker Compose
+```bash
+docker-compose up --build
+```
+
+### Detener la aplicación
+```bash
+docker-compose down
+```
+
+### Construir imagen Docker manualmente
+```bash
+docker build -t mendel-challenge .
+```
+
+### Ejecutar contenedor
+```bash
+docker run -p 8080:8080 mendel-challenge
+```
+
+La aplicación estará disponible en: `http://localhost:8080`
+
 ## 📡 API Endpoints
 
 ### 1. Guardar Transacción
