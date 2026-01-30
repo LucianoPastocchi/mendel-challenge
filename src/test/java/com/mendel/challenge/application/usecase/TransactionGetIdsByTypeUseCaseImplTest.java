@@ -5,6 +5,9 @@ import com.mendel.challenge.application.usecase.impl.TransactionGetIdsByTypeUseC
 import com.mendel.challenge.domain.exception.TransactionException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -48,28 +51,12 @@ class TransactionGetIdsByTypeUseCaseImplTest {
         verify(transactionPort, times(1)).getIdsByType("shopping");
     }
 
-    @Test
-    void shouldThrowExceptionWhenTypeIsNull() {
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {"   ", "  ", "\t", "\n"})
+    void shouldThrowExceptionWhenTypeIsInvalid(String type) {
         assertThrows(TransactionException.class, () -> {
-            transactionGetIdsByTypeUseCase.getIdsByType(null);
-        });
-
-        verify(transactionPort, never()).getIdsByType(any());
-    }
-
-    @Test
-    void shouldThrowExceptionWhenTypeIsEmpty() {
-        assertThrows(TransactionException.class, () -> {
-            transactionGetIdsByTypeUseCase.getIdsByType("");
-        });
-
-        verify(transactionPort, never()).getIdsByType(any());
-    }
-
-    @Test
-    void shouldThrowExceptionWhenTypeIsBlank() {
-        assertThrows(TransactionException.class, () -> {
-            transactionGetIdsByTypeUseCase.getIdsByType("   ");
+            transactionGetIdsByTypeUseCase.getIdsByType(type);
         });
 
         verify(transactionPort, never()).getIdsByType(any());
