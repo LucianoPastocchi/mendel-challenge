@@ -21,6 +21,12 @@ public class TransactionGetIdsByTypeUseCaseImpl implements TransactionGetIdsByTy
             throw new TransactionException("Type cannot be null or empty");
         }
 
-        return transactionPort.getIdsByType(type.trim());
+        String sanitizedType = type.trim();
+
+        if (!sanitizedType.matches("^[a-zA-Z0-9_-]+$")) {
+            throw new TransactionException("Invalid type format: only alphanumeric characters, underscores, and hyphens are allowed");
+        }
+
+        return transactionPort.getIdsByType(sanitizedType);
     }
 }
