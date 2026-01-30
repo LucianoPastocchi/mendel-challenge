@@ -32,12 +32,12 @@ public class TransactionController {
             @PathVariable("transaction_id") Long id,
             @Valid @RequestBody TransactionRequest request) {
 
-        Transaction transaction = new Transaction(
-                id,
-                request.amount(),
-                request.type(),
-                request.parentId()
-        );
+        Transaction transaction = Transaction.builder()
+                .id(id)
+                .amount(request.amount())
+                .type(request.type())
+                .parentId(request.parentId())
+                .build();
 
         transactionUseCase.saveTransaction(transaction);
 
